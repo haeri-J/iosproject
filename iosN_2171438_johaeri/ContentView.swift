@@ -9,13 +9,19 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+        TabView {
+            MyListView()
+                .tabItem {
+                    Image(systemName: "list.bullet")
+                    Text("냉장고")
+                }
+            
+            RecipeRecommendationView() // 레시피 추천 뷰를 추가합니다.
+                .tabItem {
+                    Image(systemName: "book.fill")
+                    Text("레시피 추천")
+                }
         }
-        .padding()
     }
 }
 
