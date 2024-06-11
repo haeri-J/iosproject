@@ -43,28 +43,28 @@ struct RecipeDetailView: View {
                 Text("Step:\(recipe.MANUALS ?? "제발")")
                     .font(.subheadline)
                 
-               // Divider()
+                Divider()
                 
-//                // 만드는 법과 해당 이미지 표시
-//                ForEach(0..<recipe.MANUALS.count, id: \.self) { index in
-//                    VStack(alignment: .leading, spacing: 10) {
-//                        Text("Step \(index + 1)")
-//                            .font(.headline)
-//                        Text(recipe.MANUALS[index])
-//                            .font(.body)
-//
-//                        if index < recipe.MANUAL_IMGS.count, let imageUrl = recipe.MANUAL_IMGS[index], let url = URL(string: imageUrl) {
-//                            AsyncImage(url: url) { image in
-//                                image.resizable()
-//                                    .aspectRatio(contentMode: .fit)
-//                                    .frame(maxWidth: .infinity)
-//                            } placeholder: {
-//                                ProgressView()
-//                            }
-//                        }
-//                    }
-//                    Divider()
-//                }
+                // 만드는 법과 해당 이미지 표시
+                ForEach(0..<recipe.MANUALS.count, id: \.self) { index in
+                    VStack(alignment: .leading, spacing: 10) {
+                        Text("Step \(index + 1)")
+                            .font(.headline)
+                        Text(recipe.MANUALS[index])
+                            .font(.body)
+
+                        if index < recipe.MANUAL_IMGS.count, let imageUrl = recipe.MANUAL_IMGS[index], let url = URL(string: imageUrl) {
+                            AsyncImage(url: url) { image in
+                                image.resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(maxWidth: .infinity)
+                            } placeholder: {
+                                ProgressView()
+                            }
+                        }
+                    }
+                    Divider()
+                }
             }
             .padding()
         }
