@@ -17,6 +17,7 @@ struct Recipe: Identifiable, Decodable {
     var id: UUID = UUID()
     let RCP_SEQ: String //일련번호
     let RCP_NM: String  //메뉴명
+    let RCP_PAT2:String // 요리 종류
     let RCP_PARTS_DTLS: String //재료 정보
     let INFO_ENG: String? // 열량
     let INFO_CAR: String? // 탄수화물
@@ -31,7 +32,7 @@ struct Recipe: Identifiable, Decodable {
 
     // Decodable 프로토콜을 준수하기 위한 CodingKeys
     enum CodingKeys: String, CodingKey {
-        case RCP_SEQ, RCP_NM, RCP_PARTS_DTLS, INFO_ENG, INFO_CAR, INFO_PRO, INFO_FAT, INFO_NA, ATT_FILE_NO_MAIN
+        case RCP_SEQ, RCP_NM, RCP_PARTS_DTLS, INFO_ENG, INFO_CAR, INFO_PRO, INFO_FAT, INFO_NA, ATT_FILE_NO_MAIN, RCP_PAT2
         case MANUAL01, MANUAL02, MANUAL03, MANUAL04, MANUAL05, MANUAL06, MANUAL07, MANUAL08, MANUAL09, MANUAL10, MANUAL11, MANUAL12, MANUAL13, MANUAL14, MANUAL15, MANUAL16, MANUAL17, MANUAL18, MANUAL19, MANUAL20
         case MANUAL_IMG01, MANUAL_IMG02, MANUAL_IMG03, MANUAL_IMG04, MANUAL_IMG05, MANUAL_IMG06, MANUAL_IMG07, MANUAL_IMG08, MANUAL_IMG09, MANUAL_IMG10, MANUAL_IMG11, MANUAL_IMG12, MANUAL_IMG13, MANUAL_IMG14, MANUAL_IMG15, MANUAL_IMG16, MANUAL_IMG17, MANUAL_IMG18, MANUAL_IMG19, MANUAL_IMG20
     }
@@ -40,6 +41,7 @@ struct Recipe: Identifiable, Decodable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         RCP_SEQ = try container.decode(String.self, forKey: .RCP_SEQ)
         RCP_NM = try container.decode(String.self, forKey: .RCP_NM)
+        RCP_PAT2 = try container.decode(String.self, forKey: .RCP_PAT2)
         RCP_PARTS_DTLS = try container.decode(String.self, forKey: .RCP_PARTS_DTLS)
         INFO_ENG = try? container.decode(String.self, forKey: .INFO_ENG)
         INFO_CAR = try? container.decode(String.self, forKey: .INFO_CAR)
@@ -101,7 +103,7 @@ func fetchRecipes(matching ingredients: [String], completion: @escaping ([Recipe
                 } else {
                     // 모든 데이터를 다 가져왔음.
                     DispatchQueue.main.async {
-                        print("Total recipes fetched: \(allRecipes.count)")
+                        print("Total recipes fetched: \(allRecipes)")
                         completion(allRecipes)
                     }
 
@@ -117,7 +119,8 @@ func fetchRecipes(matching ingredients: [String], completion: @escaping ([Recipe
     fetchBatch()
 }
 
-func compareIngredients(_ recipeIngredients: String, userIngredients: [String]) -> Bool {
+//메뉴추천로직
+func compareIngredients(_ recipeIngredients: String, recipeName: String, userIngredients: [String]) -> Bool {
     let recipeIngredientsArray = recipeIngredients.split(separator: ",").map(String.init).map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
     
     // 사용자의 재료가 레시피 재료명에 포함되어 있는지 검사
@@ -127,10 +130,13 @@ func compareIngredients(_ recipeIngredients: String, userIngredients: [String]) 
         }
     }
     
-    print("matches: \(matches)")
-    print("recipe array: \(recipeIngredientsArray)")
+    // 레시피 이름에 사용자의 재료가 포함되어 있는지 검사
+    let nameMatches = userIngredients.filter { userIngredient in
+        recipeName.lowercased().contains(userIngredient.lowercased())
+    }
     
-    // 사용자의 재료가 1개 이상 레시피의 재료명에 포함되어 있는 경우 true 반환
-    return !matches.isEmpty
+    // 사용자의 재료가 3개 이상 레시피의 재료명에 포함되어 있거나, 레시피 이름에 사용자의 재료가 포함되어 있는 경우
+    return matches.count >= 5 || !nameMatches.isEmpty
 }
+
 
