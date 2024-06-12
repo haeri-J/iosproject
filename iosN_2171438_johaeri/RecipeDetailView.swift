@@ -7,8 +7,6 @@
 
 import SwiftUI
 
-import SwiftUI
-
 struct RecipeDetailView: View {
     let recipe: Recipe
 
@@ -40,8 +38,6 @@ struct RecipeDetailView: View {
                     .font(.subheadline)
                 Text("재료: \(recipe.RCP_PARTS_DTLS)")
                     .font(.subheadline)
-                Text("Step:\(recipe.MANUALS ?? "제발")")
-                    .font(.subheadline)
                 
                 Divider()
                 
@@ -71,10 +67,3 @@ struct RecipeDetailView: View {
         .navigationTitle("레시피 상세 정보")
     }
 }
-
-
-//struct RecipeDetailView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        RecipeDetailView()
-//    }
-//}

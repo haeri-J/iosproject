@@ -24,17 +24,16 @@ struct Recipe: Identifiable, Decodable {
     let INFO_FAT: String? // 지방
     let INFO_NA: String? // 나트륨
     let ATT_FILE_NO_MAIN: String? // 이미지경로(소)
-    let MANUALS: String?
 
-//    // 만드는 법과 그 이미지들
-//    var MANUALS: [String] = []
-//    var MANUAL_IMGS: [String] = []
+    // 만드는 법과 그 이미지들
+    var MANUALS: [String] = []
+    var MANUAL_IMGS: [String] = []
 
     // Decodable 프로토콜을 준수하기 위한 CodingKeys
     enum CodingKeys: String, CodingKey {
-        case RCP_SEQ, RCP_NM, RCP_PARTS_DTLS, INFO_ENG, INFO_CAR, INFO_PRO, INFO_FAT, INFO_NA, ATT_FILE_NO_MAIN, MANUAL1
-        case  MANUAL2, MANUAL3, MANUAL4, MANUAL5, MANUAL6, MANUAL7, MANUAL8, MANUAL9, MANUAL10, MANUAL11, MANUAL12, MANUAL13, MANUAL14, MANUAL15, MANUAL16, MANUAL17, MANUAL18, MANUAL19, MANUAL20
-        case MANUAL_IMG1, MANUAL_IMG2, MANUAL_IMG3, MANUAL_IMG4, MANUAL_IMG5, MANUAL_IMG6, MANUAL_IMG7, MANUAL_IMG8, MANUAL_IMG9, MANUAL_IMG10, MANUAL_IMG11, MANUAL_IMG12, MANUAL_IMG13, MANUAL_IMG14, MANUAL_IMG15, MANUAL_IMG16, MANUAL_IMG17, MANUAL_IMG18, MANUAL_IMG19, MANUAL_IMG20
+        case RCP_SEQ, RCP_NM, RCP_PARTS_DTLS, INFO_ENG, INFO_CAR, INFO_PRO, INFO_FAT, INFO_NA, ATT_FILE_NO_MAIN
+        case MANUAL01, MANUAL02, MANUAL03, MANUAL04, MANUAL05, MANUAL06, MANUAL07, MANUAL08, MANUAL09, MANUAL10, MANUAL11, MANUAL12, MANUAL13, MANUAL14, MANUAL15, MANUAL16, MANUAL17, MANUAL18, MANUAL19, MANUAL20
+        case MANUAL_IMG01, MANUAL_IMG02, MANUAL_IMG03, MANUAL_IMG04, MANUAL_IMG05, MANUAL_IMG06, MANUAL_IMG07, MANUAL_IMG08, MANUAL_IMG09, MANUAL_IMG10, MANUAL_IMG11, MANUAL_IMG12, MANUAL_IMG13, MANUAL_IMG14, MANUAL_IMG15, MANUAL_IMG16, MANUAL_IMG17, MANUAL_IMG18, MANUAL_IMG19, MANUAL_IMG20
     }
     
     init(from decoder: Decoder) throws {
@@ -48,20 +47,20 @@ struct Recipe: Identifiable, Decodable {
         INFO_FAT = try? container.decode(String.self, forKey: .INFO_FAT)
         INFO_NA = try? container.decode(String.self, forKey: .INFO_NA)
         ATT_FILE_NO_MAIN = try? container.decode(String.self, forKey: .ATT_FILE_NO_MAIN)
-        MANUALS = try? container.decode(String.self, forKey: .MANUAL1)
-//        MANUALS.append(manual ?? "N/A")
         
-//        for i in 1...20 {
-//            if let manual = try? container.decode(String.self, forKey: CodingKeys(rawValue: "MANUAL\(i)")!), !manual.isEmpty {
-//                MANUALS.append(manual)
-//            }
-//            if let manualImg = try? container.decode(String.self, forKey: CodingKeys(rawValue: "MANUAL_IMG\(i)")!), !manualImg.isEmpty {
-//                MANUAL_IMGS.append(manualImg)
-//            }
-//        }
-        //  print("manual:\(MANUALS), \n manualimg:\(MANUAL_IMGS)")
+        for i in 1...20 {
+            let manualKey = CodingKeys(rawValue: String(format: "MANUAL%02d", i))!
+            let manualImgKey = CodingKeys(rawValue: String(format: "MANUAL_IMG%02d", i))!
+            
+            if let manual = try? container.decode(String.self, forKey: manualKey), !manual.isEmpty {
+                MANUALS.append(manual)
+            }
+            if let manualImg = try? container.decode(String.self, forKey: manualImgKey), !manualImg.isEmpty {
+                MANUAL_IMGS.append(manualImg)
+            }
+        }
+        print("manual:\(MANUALS), \n manualimg:\(MANUAL_IMGS)")
     }
-
 }
 
 // URL 생성을 위한 Helper 함수
@@ -115,20 +114,13 @@ func fetchRecipes(matching ingredients: [String], completion: @escaping ([Recipe
     
     fetchBatch()
 }
-//재료 비교 로직
+
+// 재료 비교 로직
 func compareIngredients(_ recipeIngredients: String, userIngredients: [String]) -> Bool {
     let recipeIngredientsArray = recipeIngredients.split(separator: ",").map(String.init).map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
-
-    let matches = userIngredients.filter { userIngredient in
-        recipeIngredientsArray.contains { recipeIngredient in
-            recipeIngredient.lowercased().contains(userIngredient.lowercased())
-        }
-    }
-//
-//    print("matches: \(matches)")
-//    print("recipe array: \(recipeIngredientsArray)")
+    let matches = userIngredients.filter { recipeIngredientsArray.contains($0) }
     
-    // 사용자의 재료가 1개 이상 레시피의 재료명에 포함되어 있는 경우 true 반환
-    return !matches.isEmpty
+    // 사용자의 재료가 1개 이상 레시피의 재료와 일치하거나
+    // 사용자의 모든 재료가 레시피에 포함되어 있는 경우 true 반환
+    return matches.count >= 5 || matches.count == userIngredients.count
 }
-
