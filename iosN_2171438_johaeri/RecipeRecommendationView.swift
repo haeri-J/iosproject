@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct RecipeRecommendationView: View {
+    
+    @EnvironmentObject var foodItems: FoodItems
+    
     @State private var recommendedRecipes: [Recipe] = []
     @State private var selectedRecipe: Recipe?
     @State private var showDetail = false
@@ -46,9 +49,9 @@ struct RecipeRecommendationView: View {
             }
             .navigationTitle("추천 레시피")
             .onAppear {
-                fetchRecipes(matching: ["당근", "양파", "마늘"]) { recipes in
-                    self.recommendedRecipes = recipes.filter { compareIngredients($0.RCP_PARTS_DTLS, userIngredients: ["당근", "양파", "마늘"]) }
-                }
+                        fetchRecipes(matching: foodItems.items.map { $0.name }) { recipes in
+                            self.recommendedRecipes = recipes.filter { compareIngredients($0.RCP_PARTS_DTLS, userIngredients: foodItems.items.map { $0.name }) }
+                        }
             }
             .sheet(isPresented: $showDetail) {
                 if let selectedRecipe = selectedRecipe {

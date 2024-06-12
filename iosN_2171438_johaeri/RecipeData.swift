@@ -59,7 +59,7 @@ struct Recipe: Identifiable, Decodable {
                 MANUAL_IMGS.append(manualImg)
             }
         }
-        print("manual:\(MANUALS), \n manualimg:\(MANUAL_IMGS)")
+
     }
 }
 
@@ -101,8 +101,10 @@ func fetchRecipes(matching ingredients: [String], completion: @escaping ([Recipe
                 } else {
                     // 모든 데이터를 다 가져왔음.
                     DispatchQueue.main.async {
+                        print("Total recipes fetched: \(allRecipes.count)")
                         completion(allRecipes)
                     }
+
                 }
             } catch {
                 print("Error decoding data: \(error)")
@@ -115,12 +117,20 @@ func fetchRecipes(matching ingredients: [String], completion: @escaping ([Recipe
     fetchBatch()
 }
 
-// 재료 비교 로직
 func compareIngredients(_ recipeIngredients: String, userIngredients: [String]) -> Bool {
     let recipeIngredientsArray = recipeIngredients.split(separator: ",").map(String.init).map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
-    let matches = userIngredients.filter { recipeIngredientsArray.contains($0) }
     
-    // 사용자의 재료가 1개 이상 레시피의 재료와 일치하거나
-    // 사용자의 모든 재료가 레시피에 포함되어 있는 경우 true 반환
-    return matches.count >= 5 || matches.count == userIngredients.count
+    // 사용자의 재료가 레시피 재료명에 포함되어 있는지 검사
+    let matches = userIngredients.filter { userIngredient in
+        recipeIngredientsArray.contains { recipeIngredient in
+            recipeIngredient.lowercased().contains(userIngredient.lowercased())
+        }
+    }
+    
+    print("matches: \(matches)")
+    print("recipe array: \(recipeIngredientsArray)")
+    
+    // 사용자의 재료가 1개 이상 레시피의 재료명에 포함되어 있는 경우 true 반환
+    return !matches.isEmpty
 }
+

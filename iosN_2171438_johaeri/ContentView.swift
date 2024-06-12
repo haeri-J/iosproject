@@ -6,9 +6,26 @@
 //
 
 import SwiftUI
+import Combine
 
+struct FoodItem: Identifiable {
+    let id = UUID()
+    var name: String
+    var expirationDate: Date
+    var memo: String
+    var image: UIImage?
+}
+
+class FoodItems: ObservableObject {
+    @Published var items: [FoodItem] = []
+}
 
 struct ContentView: View {
+    @StateObject private var foodItems = FoodItems()
+    
+//    init() {
+//           FirebaseApp.configure()
+//       }
     
     var body: some View {
         TabView {
@@ -17,12 +34,14 @@ struct ContentView: View {
                     Image(systemName: "list.bullet")
                     Text("냉장고")
                 }
-            
+                .environmentObject(foodItems)
+       
             RecipeRecommendationView() // 레시피 추천 뷰를 추가합니다.
                 .tabItem {
                     Image(systemName: "book.fill")
                     Text("레시피 추천")
                 }
+                .environmentObject(foodItems)
         }
     }
 }
