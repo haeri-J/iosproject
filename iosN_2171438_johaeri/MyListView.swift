@@ -92,10 +92,20 @@ struct MyListView: View {
         }
     }
     
-    // 음식 항목을 삭제하는 함수
     func delete(at offsets: IndexSet) {
-        foodItems.items.remove(atOffsets: offsets)
+        // separateByDateFood에서 삭제할 항목을 찾음
+        let deletedItems = offsets.compactMap { foodItems.separateByDateFood[$0] }
+        // separateByDateFood에서 항목을 삭제
+        foodItems.separateByDateFood.remove(atOffsets: offsets)
+        // foodItems.items에서 동일한 항목을 삭제
+        for item in deletedItems {
+            if let index = foodItems.items.firstIndex(where: { $0.id == item.id }) {
+                foodItems.items.remove(at: index)
+            }
+        }
     }
+
+
     
     // 날짜를 포맷팅하는 함수
     private func formattedDate(_ date: Date) -> String {
