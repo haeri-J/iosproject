@@ -77,10 +77,10 @@
 				F4057D7E2C0F028400EA801B /* ContentView.swift */,
 				F442B91F2C1064F500DA98FD /* RecipeRecommendationView.swift */,
 				F442B9212C106D7A00DA98FD /* RecipeData.swift */,
-				F4057D802C0F028900EA801B /* Assets.xcassets */,
-				F4057D822C0F028900EA801B /* Preview Content */,
 				F4281B942C17108800CB245A /* RecipeDetailView.swift */,
 				F40B3CAE2C19B15C008D2D7B /* CalendarView.swift */,
+				F4057D802C0F028900EA801B /* Assets.xcassets */,
+				F4057D822C0F028900EA801B /* Preview Content */,
 			);
 			path = iosN_2171438_johaeri;
 			sourceTree = "<group>";
