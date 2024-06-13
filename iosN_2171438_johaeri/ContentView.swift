@@ -20,16 +20,25 @@ class FoodItems: ObservableObject {
         }
     }
     @Published var recommendedRecipes: [Recipe] = [] // 추천 레시피가 저장되는 배열
-
+    
+    @Published var selectedDate: String = "오늘" {
+        didSet {
+            separateByDate()
+        }
+    }
+    @Published var separateByDateFood:[FoodItem] = [] //날짜를 기점으로 저장되는 배열
+    
+    
     // 초기화 메서드
     init() {
         // 앱이 시작될 때 API를 호출하여 레시피 데이터를 가져옴.
         fetchRecipes(matching: items.map { $0.name }) { recipes in
             self.recipes = recipes //가져온 레시피 저장
             self.updateRecipes() // 레시피를 가져온 후 추천 레시피를 업데이트
+            self.separateByDate()
         }
     }
-
+    
     // 추천 레시피를 업데이트하는 메서드
     public func updateRecipes() {
         DispatchQueue.main.async {
@@ -40,40 +49,66 @@ class FoodItems: ObservableObject {
             }
         }
     }
-}
-//시작뷰
-struct ContentView: View {
-    @StateObject private var foodItems = FoodItems() // 참조 타입 객체를 뷰의 상태로 관리
-
-    var body: some View {
-        TabView {
-            // 첫 번째 탭: 냉장고 뷰
-            NavigationView {
-                MyListView()
-                    .navigationTitle("냉장고")
+    
+    // 날짜별로 음식 아이템을 분리하는 메소드
+    public func separateByDate() {
+        DispatchQueue.main.async {
+            self.separateByDateFood = self.items.filter { item in
+                let calendar = Calendar.current
+                let today = Date()
+                
+                switch self.selectedDate {
+                case "오늘":
+                    return calendar.isDate(item.expirationDate, inSameDayAs: today)
+                case "과거":
+                    return item.expirationDate < today
+                case "미래":
+                    return item.expirationDate > today
+                case "전체":
+                    return true
+                default:
+                    return false
+                }
             }
-            .tabItem {
-                Image(systemName: "list.bullet")
-                Text("냉장고")
-            }
-            .environmentObject(foodItems) // FoodItems 객체를 environmentObject로 전달
-
-            // 두 번째 탭: 레시피 추천 뷰
-            NavigationView {
-                RecipeRecommendationView()
-                    .navigationTitle("레시피 추천")
-            }
-            .tabItem {
-                Image(systemName: "book.fill")
-                Text("레시피 추천")
-            }
-            .environmentObject(foodItems) // FoodItems 객체를 environmentObject로 전달
         }
     }
 }
-
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
+    
+    
+    //시작뷰
+    struct ContentView: View {
+        @StateObject private var foodItems = FoodItems() // 참조 타입 객체를 뷰의 상태로 관리
+        
+        var body: some View {
+            TabView {
+                // 첫 번째 탭: 냉장고 뷰
+                NavigationView {
+                    MyListView()
+                        .navigationTitle("냉장고")
+                }
+                .tabItem {
+                    Image(systemName: "list.bullet")
+                    Text("냉장고")
+                }
+                .environmentObject(foodItems) // FoodItems 객체를 environmentObject로 전달
+                
+                // 두 번째 탭: 레시피 추천 뷰
+                NavigationView {
+                    RecipeRecommendationView()
+                        .navigationTitle("레시피 추천")
+                }
+                .tabItem {
+                    Image(systemName: "book.fill")
+                    Text("레시피 추천")
+                }
+                .environmentObject(foodItems) // FoodItems 객체를 environmentObject로 전달
+            }
+        }
     }
-}
+    
+    struct ContentView_Previews: PreviewProvider {
+        static var previews: some View {
+            ContentView()
+        }
+    }
+
