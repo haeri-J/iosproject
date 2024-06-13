@@ -103,7 +103,7 @@ func fetchRecipes(matching ingredients: [String], completion: @escaping ([Recipe
                 } else {
                     // 모든 데이터를 다 가져왔음.
                     DispatchQueue.main.async {
-                        print("Total recipes fetched: \(allRecipes.count)")
+                        print("Total recipes fetched: \(allRecipes.count)")//총 1124개
                         completion(allRecipes)
                     }
 
@@ -135,8 +135,8 @@ func compareIngredients(_ recipeIngredients: String, recipeName: String, userIng
         recipeName.lowercased().contains(userIngredient.lowercased())
     }
     
-    // 사용자의 재료가 3개 이상 레시피의 재료명에 포함되어 있거나, 레시피 이름에 사용자의 재료가 포함되어 있는 경우
-    return matches.count >= 5 || !nameMatches.isEmpty
+    // 사용자의 재료가 4개 이상 레시피의 재료명에 포함되어 있거나, 레시피 이름에 사용자의 재료가 포함되어 있는 경우
+    return matches.count >= 4 || !nameMatches.isEmpty
 }
 
 

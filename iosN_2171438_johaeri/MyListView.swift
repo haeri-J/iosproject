@@ -15,6 +15,7 @@ struct MyListView: View {
     @State private var showingCalendarView = false
     
     let categories = ["과거", "오늘", "미래", "전체"]
+    //contentview의 Fooditem을 날짜별로 분류할 카테고리
     
     var body: some View {
         
@@ -58,6 +59,7 @@ struct MyListView: View {
                     }) {
                         Image(systemName: "calendar") // 캘린더 아이콘
                     }
+                    .onAppear{ foodItems.separateByDate() }
                     .sheet(isPresented: $showingCalendarView) {
                         CalendarView(foodItems: $foodItems.items) // 캘린더 뷰를 표시
                     }

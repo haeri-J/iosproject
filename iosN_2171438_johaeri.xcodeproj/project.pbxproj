@@ -15,8 +15,8 @@
 		F4057DCA2C0F07C700EA801B /* MyListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4057DC92C0F07C700EA801B /* MyListView.swift */; };
 		F4057DCE2C0F0BEB00EA801B /* EditFoodItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4057DCD2C0F0BEB00EA801B /* EditFoodItemView.swift */; };
 		F40B3CAF2C19B15C008D2D7B /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F40B3CAE2C19B15C008D2D7B /* CalendarView.swift */; };
-		F4281B882C17012E00CB245A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F4281B872C17012E00CB245A /* GoogleService-Info.plist */; };
 		F4281B952C17108800CB245A /* RecipeDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4281B942C17108800CB245A /* RecipeDetailView.swift */; };
+		F4369F7B2C1AF22500350462 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F4369F7A2C1AF22500350462 /* GoogleService-Info.plist */; };
 		F442B91E2C105D7700DA98FD /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F442B91D2C105D7700DA98FD /* ImagePicker.swift */; };
 		F442B9202C1064F500DA98FD /* RecipeRecommendationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F442B91F2C1064F500DA98FD /* RecipeRecommendationView.swift */; };
 		F442B9222C106D7A00DA98FD /* fetchRecipeData.swift in Sources */ = {isa = PBXBuildFile; fileRef = F442B9212C106D7A00DA98FD /* fetchRecipeData.swift */; };
@@ -31,8 +31,8 @@
 		F4057DC92C0F07C700EA801B /* MyListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyListView.swift; sourceTree = "<group>"; };
 		F4057DCD2C0F0BEB00EA801B /* EditFoodItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditFoodItemView.swift; sourceTree = "<group>"; };
 		F40B3CAE2C19B15C008D2D7B /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
-		F4281B872C17012E00CB245A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F4281B942C17108800CB245A /* RecipeDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDetailView.swift; sourceTree = "<group>"; };
+		F4369F7A2C1AF22500350462 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F442B91D2C105D7700DA98FD /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		F442B91F2C1064F500DA98FD /* RecipeRecommendationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeRecommendationView.swift; sourceTree = "<group>"; };
 		F442B9212C106D7A00DA98FD /* fetchRecipeData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = fetchRecipeData.swift; sourceTree = "<group>"; };
@@ -69,7 +69,7 @@
 		F4057D7B2C0F028400EA801B /* iosN_2171438_johaeri */ = {
 			isa = PBXGroup;
 			children = (
-				F4281B872C17012E00CB245A /* GoogleService-Info.plist */,
+				F4369F7A2C1AF22500350462 /* GoogleService-Info.plist */,
 				F4057DC92C0F07C700EA801B /* MyListView.swift */,
 				F4057DCD2C0F0BEB00EA801B /* EditFoodItemView.swift */,
 				F4057D7C2C0F028400EA801B /* iosN_2171438_johaeriApp.swift */,
@@ -159,7 +159,7 @@
 			files = (
 				F4057D842C0F028900EA801B /* Preview Assets.xcassets in Resources */,
 				F4057D812C0F028900EA801B /* Assets.xcassets in Resources */,
-				F4281B882C17012E00CB245A /* GoogleService-Info.plist in Resources */,
+				F4369F7B2C1AF22500350462 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

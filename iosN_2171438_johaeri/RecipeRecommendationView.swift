@@ -28,9 +28,11 @@ struct RecipeRecommendationView: View {
             // 추천 레시피를 표시하는 리스트
             List(foodItems.recommendedRecipes) { recipe in
                 Button(action: {
-                    selectedRecipe = recipe //선택된 레시피를 selectedRecipe에 담기
-                    showDetail = true // showDetail을 true로 설정하여 시트가 표시되도록 함
-                }) {
+                    if !recommendedRecipes.isEmpty {
+                        selectedRecipe = recipe
+                        showDetail = true
+                    }
+                })  {
                     HStack {
                         // 레시피 이미지가 있을 경우 AsyncImage를 사용하여 이미지를 비동기적으로 로드
                         if let imageUrl = recipe.ATT_FILE_NO_MAIN, let url = URL(string: imageUrl) {
@@ -43,10 +45,7 @@ struct RecipeRecommendationView: View {
                                 ProgressView() // 이미지를 로드하는 동안 ProgressView(로딩 스피너)를 표시
                             }
                         } else {
-                            // 이미지가 없을 경우 회색 사각형을 표시
-//                            Rectangle()
-//                                .fill(Color.gray)
-//                                .frame(width: 50, height: 50)
+                            //이미지가 없을때 에셋에 있는 이미지 없음으로 표시
                             Image(uiImage: UIImage(named: "img")!)
                                 .frame(width: 50, height: 50)
                         }

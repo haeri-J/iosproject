@@ -23,9 +23,8 @@ struct RecipeDetailView: View {
                         ProgressView() // 이미지가 로드되는 동안 로딩 스피너를 표시
                     }
                 } else {
-                    // 이미지가 없을 경우 회색 직사각형 표시
-                    Rectangle()
-                        .fill(Color.gray)
+                    //이미지가 없을때 에셋에 있는 이미지 없음으로 표시
+                    Image(uiImage: UIImage(named: "img")!)
                         .frame(height: 200)
                 }
                 

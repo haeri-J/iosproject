@@ -22,11 +22,11 @@ class FoodItems: ObservableObject {
     @Published var recommendedRecipes: [Recipe] = [] // 추천 레시피가 저장되는 배열
     
     @Published var selectedDate: String = "오늘" {
-        didSet {
+        willSet {
             separateByDate()
         }
     }
-    @Published var separateByDateFood:[FoodItem] = [] //날짜를 기점으로 저장되는 배열
+    @Published var separateByDateFood:[FoodItem] = [] //날짜를 기점으로 냉장고 재료가 저장되는 배열
     
     
     // 초기화 메서드
@@ -56,14 +56,26 @@ class FoodItems: ObservableObject {
             self.separateByDateFood = self.items.filter { item in
                 let calendar = Calendar.current
                 let today = Date()
-                
+
+                // 시간 정보를 제거한 오늘 날짜
+                let components = calendar.dateComponents([.year, .month, .day], from: today)
+                guard let todayWithoutTime = calendar.date(from: components) else {
+                    return false
+                }
+
+                // 시간 정보를 제거한 아이템의 유통기한 날짜
+                let itemComponents = calendar.dateComponents([.year, .month, .day], from: item.expirationDate)
+                guard let itemDateWithoutTime = calendar.date(from: itemComponents) else {
+                    return false
+                }
+
                 switch self.selectedDate {
                 case "오늘":
-                    return calendar.isDate(item.expirationDate, inSameDayAs: today)
+                    return calendar.isDate(itemDateWithoutTime, inSameDayAs: todayWithoutTime)
                 case "과거":
-                    return item.expirationDate < today
+                    return itemDateWithoutTime < todayWithoutTime
                 case "미래":
-                    return item.expirationDate > today
+                    return itemDateWithoutTime > todayWithoutTime
                 case "전체":
                     return true
                 default:
@@ -72,6 +84,7 @@ class FoodItems: ObservableObject {
             }
         }
     }
+
 }
     
     
