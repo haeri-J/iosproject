@@ -28,11 +28,8 @@ struct RecipeRecommendationView: View {
             // 추천 레시피를 표시하는 리스트
             List(foodItems.recommendedRecipes) { recipe in
                 Button(action: {
-                    if !recommendedRecipes.isEmpty {
-                        selectedRecipe = recipe
-                        showDetail = true
-                    }
-                })  {
+                    selectedRecipe = recipe
+                }) {
                     HStack {
                         // 레시피 이미지가 있을 경우 AsyncImage를 사용하여 이미지를 비동기적으로 로드
                         if let imageUrl = recipe.ATT_FILE_NO_MAIN, let url = URL(string: imageUrl) {
@@ -64,10 +61,8 @@ struct RecipeRecommendationView: View {
             }
             
             // showDetail가 트루이고 선택된 레시피가 있으면  .sheet로 레시피 상세 뷰를 띄우고 selectedRecipe을 넘겨줌.
-            .sheet(isPresented: $showDetail) {
-                if let selectedRecipe = selectedRecipe {
-                    RecipeDetailView(recipe: selectedRecipe)//selectedRecipe를 참조할 수 있도록 값 자체를 전달
-                }
+            .sheet(item: $selectedRecipe) { recipe in
+                RecipeDetailView(recipe: recipe)
             }
         }
     }

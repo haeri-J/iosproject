@@ -79,6 +79,7 @@ struct MyListView: View {
                             self.foodItems.items.append(self.newFoodItem)
                             // 새로운 음식 항목을 초기화
                             self.newFoodItem = FoodItem(name: "", expirationDate: Date(), memo: "", image: nil)
+                            self.foodItems.separateByDate()
                         }
                     }
             }
