@@ -19,7 +19,7 @@
 		F4281B952C17108800CB245A /* RecipeDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4281B942C17108800CB245A /* RecipeDetailView.swift */; };
 		F442B91E2C105D7700DA98FD /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F442B91D2C105D7700DA98FD /* ImagePicker.swift */; };
 		F442B9202C1064F500DA98FD /* RecipeRecommendationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F442B91F2C1064F500DA98FD /* RecipeRecommendationView.swift */; };
-		F442B9222C106D7A00DA98FD /* RecipeData.swift in Sources */ = {isa = PBXBuildFile; fileRef = F442B9212C106D7A00DA98FD /* RecipeData.swift */; };
+		F442B9222C106D7A00DA98FD /* fetchRecipeData.swift in Sources */ = {isa = PBXBuildFile; fileRef = F442B9212C106D7A00DA98FD /* fetchRecipeData.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,7 +35,7 @@
 		F4281B942C17108800CB245A /* RecipeDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDetailView.swift; sourceTree = "<group>"; };
 		F442B91D2C105D7700DA98FD /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		F442B91F2C1064F500DA98FD /* RecipeRecommendationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeRecommendationView.swift; sourceTree = "<group>"; };
-		F442B9212C106D7A00DA98FD /* RecipeData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeData.swift; sourceTree = "<group>"; };
+		F442B9212C106D7A00DA98FD /* fetchRecipeData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = fetchRecipeData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,7 +76,7 @@
 				F442B91D2C105D7700DA98FD /* ImagePicker.swift */,
 				F4057D7E2C0F028400EA801B /* ContentView.swift */,
 				F442B91F2C1064F500DA98FD /* RecipeRecommendationView.swift */,
-				F442B9212C106D7A00DA98FD /* RecipeData.swift */,
+				F442B9212C106D7A00DA98FD /* fetchRecipeData.swift */,
 				F4281B942C17108800CB245A /* RecipeDetailView.swift */,
 				F40B3CAE2C19B15C008D2D7B /* CalendarView.swift */,
 				F4057D802C0F028900EA801B /* Assets.xcassets */,
@@ -172,7 +172,7 @@
 			files = (
 				F4057DCA2C0F07C700EA801B /* MyListView.swift in Sources */,
 				F4057DCE2C0F0BEB00EA801B /* EditFoodItemView.swift in Sources */,
-				F442B9222C106D7A00DA98FD /* RecipeData.swift in Sources */,
+				F442B9222C106D7A00DA98FD /* fetchRecipeData.swift in Sources */,
 				F442B91E2C105D7700DA98FD /* ImagePicker.swift in Sources */,
 				F442B9202C1064F500DA98FD /* RecipeRecommendationView.swift in Sources */,
 				F4057D7F2C0F028400EA801B /* ContentView.swift in Sources */,
