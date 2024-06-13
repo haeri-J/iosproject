@@ -1,14 +1,21 @@
 import SwiftUI
 import Combine
 
-// FoodItem 구조체는 냉장고에 저장된 음식 아이템을 나타냄
-struct FoodItem: Identifiable {
-    let id = UUID() // 각 아이템을 고유하게 식별하기 위한 UUID
-    var name: String // 음식 이름
-    var expirationDate: Date // 유통기한
-    var memo: String // 메모
-    var image: UIImage? // 이미지
+class FoodItem: ObservableObject, Identifiable {
+    let id = UUID()
+    @Published var name: String
+    @Published var expirationDate: Date
+    @Published var memo: String
+    @Published var image: UIImage?
+
+    init(name: String, expirationDate: Date, memo: String, image: UIImage?) {
+        self.name = name
+        self.expirationDate = expirationDate
+        self.memo = memo
+        self.image = image
+    }
 }
+
 
 // FoodItems 클래스는 ObservableObject로 지정 //@ObservedObject는 ObservableObject 프로토콜을 준수하는 객체를 관찰하는 뷰 내에서 사용되는 프로퍼티 래퍼
 class FoodItems: ObservableObject {

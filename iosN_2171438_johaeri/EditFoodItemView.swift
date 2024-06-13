@@ -33,15 +33,17 @@ struct EditFoodItemView: View {
                 }
             }
             Button("완료") {
-                if let inputImage = inputImage {//완료버튼을 누르면 inputImage에 데이터가 있을 경우 foodItem.image에 넣기
-                                   foodItem.image = inputImage
-                               }
+                if let inputImage = inputImage {
+                    foodItem.image = inputImage
+                } else {
+                    foodItem.image = foodItem.image
+                }
                 self.presentationMode.wrappedValue.dismiss() // 완료 버튼을 누르면 뷰를 닫음
             }
         }
         .navigationTitle("음식 정보 수정하기")
         .sheet(isPresented: $showingImagePicker) {//.sheet 모달 뷰를 보여주는 데 사용하는 뷰 수식어
-            ImagePicker(selectedImage: $inputImage)//ImagePicker가 inputImage를 변경할 수 있도록 바인딩을 전달
+            ImagePicker(selectedImage: $inputImage)
               }
     }
 }

@@ -29,6 +29,7 @@ struct MyListView: View {
             }
             .pickerStyle(SegmentedPickerStyle()) // Picker 스타일을 SegmentedPicker로 설정
             .padding()
+  
             
             List {
                 // foodItems 배열을 순회하며 각 항목을 표시
@@ -79,10 +80,15 @@ struct MyListView: View {
                             self.foodItems.items.append(self.newFoodItem)
                             // 새로운 음식 항목을 초기화
                             self.newFoodItem = FoodItem(name: "", expirationDate: Date(), memo: "", image: nil)
+                            // 새로운 아이템이 추가되었으므로 separateByDate 함수를 호출
+                            print("\(self.foodItems.items)")
+                            print("aa")
+
                             self.foodItems.separateByDate()
                         }
                     }
             }
+
         }
     }
     
