@@ -11,11 +11,7 @@ struct EditFoodItemView: View {
     @Binding var foodItem: FoodItem // 상위뷰의 FoodItem의 정보를 수정할 수 있도록 Binding 사용
     @Environment(\.presentationMode) var presentationMode // 뷰를 닫기 위한 환경 변수
     @State private var showingImagePicker = false //.sheet를 표시할지 여부를 정하는 변수
-    @State private var inputImage: UIImage? {
-          didSet {
-              foodItem.image = inputImage //inputImage가 변경될 때마다 foodItem.image도 업데이트
-          }
-      }
+    @State private var inputImage: UIImage? 
     
 
     var body: some View {
@@ -27,17 +23,22 @@ struct EditFoodItemView: View {
                 TextField("메모", text: $foodItem.memo)//메모 받고 메모저장
                 // 사진 추가 및 수정 기능 구현
                 Section {
-                    if let image = inputImage {
-                        Image(uiImage: image)
-                            .resizable()
-                            .scaledToFit()
-                    }
+                    if let image =  inputImage { //인풋이미지가 있다면 배치해라
+                                            Image(uiImage: image)
+                                                .resizable()
+                                                .scaledToFit()
+                                        }
                     Button("사진 선택") {
                         showingImagePicker = true//.sheet 함수 실행
                     }
                 }
             }
             Button("완료") {
+                if let inputImage = inputImage {//inputImage가 있으면 foodItem.image에 넣기
+                                   foodItem.image = inputImage
+                               } else {
+                                   foodItem.image = foodItem.image//아니면 원래 있던 이미지 써라.
+                               }
                 self.presentationMode.wrappedValue.dismiss() // 완료 버튼을 누르면 뷰를 닫음
             }
         }
@@ -45,6 +46,11 @@ struct EditFoodItemView: View {
         .sheet(isPresented: $showingImagePicker) {//$showingImagePicker가 트루면 ImagePicker 호출
             ImagePicker(selectedImage: $inputImage)
         }
+        .onAppear {
+                    if let image = foodItem.image {
+                        inputImage = image//인풋이미지의 원래 가지고 있던 이미지 넣기
+                    }
+                }
     }
 }
 
