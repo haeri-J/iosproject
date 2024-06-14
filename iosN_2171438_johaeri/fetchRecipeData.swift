@@ -119,24 +119,27 @@ func fetchRecipes(matching ingredients: [String], completion: @escaping ([Recipe
     fetchBatch()
 }
 
-//메뉴추천로직
 func compareIngredients(_ recipeIngredients: String, recipeName: String, userIngredients: [String]) -> Bool {
     let recipeIngredientsArray = recipeIngredients.split(separator: ",").map(String.init).map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
     
+    // 사용자의 재료 리스트에서 공백을 제거
+    let userIngredientsWithoutSpaces = userIngredients.map { $0.replacingOccurrences(of: " ", with: "") }
+    
     // 사용자의 재료가 레시피 재료명에 포함되어 있는지 검사
-    let matches = userIngredients.filter { userIngredient in
+    let matches = userIngredientsWithoutSpaces.filter { userIngredient in
         recipeIngredientsArray.contains { recipeIngredient in
             recipeIngredient.lowercased().contains(userIngredient.lowercased())
         }
     }
     
     // 레시피 이름에 사용자의 재료가 포함되어 있는지 검사
-    let nameMatches = userIngredients.filter { userIngredient in
+    let nameMatches = userIngredientsWithoutSpaces.filter { userIngredient in
         recipeName.lowercased().contains(userIngredient.lowercased())
     }
     
     // 사용자의 재료가 4개 이상 레시피의 재료명에 포함되어 있거나, 레시피 이름에 사용자의 재료가 포함되어 있는 경우
     return matches.count >= 4 || !nameMatches.isEmpty
 }
+
 
 
