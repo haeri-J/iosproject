@@ -88,8 +88,8 @@ struct MyListView: View {
                             print("\(self.foodItems.items)")
                             print("aa")
 
-                            self.foodItems.separateByDate()
-                            self.foodItems.sortByEarliestDate()
+                            self.foodItems.separateByDate()//수정된 아이템 및 생성된 아이템을 날짜에 따라 분리하기 contentview에 존재
+                            self.foodItems.sortByEarliestDate()//수정된 아이템 및 생성된 아이템을 오래된순대로 정렬하기 contentview에 존재
                         }
                     }
             }

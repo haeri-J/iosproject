@@ -30,8 +30,8 @@ class FoodItems: ObservableObject {
     
     @Published var selectedDate: String = "전체" {
         willSet {
-            separateByDate()
-            sortByEarliestDate()
+            separateByDate()  // 날짜별로 음식 아이템을 분리하는 메소드
+            sortByEarliestDate()// 날짜가 과거일수록 상단에 표시되도록 정렬하는 함수
         }
     }
     @Published var separateByDateFood:[FoodItem] = [] //날짜를 기점으로 냉장고 재료가 저장되는 배열
