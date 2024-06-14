@@ -50,6 +50,10 @@ struct MyListView: View {
                     }
                 }
                 .onDelete(perform: delete) // 삭제
+                .onAppear {
+                               // 뷰가 나타날 때 contentView의 날짜가 과거에 가까울루속 정렬해주는 함수 호출
+                               foodItems.sortByEarliestDate()
+                           }
             }
             .navigationTitle("냉장고 속 음식들")
             .navigationBarItems(
@@ -85,6 +89,7 @@ struct MyListView: View {
                             print("aa")
 
                             self.foodItems.separateByDate()
+                            self.foodItems.sortByEarliestDate()
                         }
                     }
             }

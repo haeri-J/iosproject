@@ -28,9 +28,10 @@ class FoodItems: ObservableObject {
     }
     @Published var recommendedRecipes: [Recipe] = [] // 추천 레시피가 저장되는 배열
     
-    @Published var selectedDate: String = "오늘" {
+    @Published var selectedDate: String = "전체" {
         willSet {
             separateByDate()
+            sortByEarliestDate()
         }
     }
     @Published var separateByDateFood:[FoodItem] = [] //날짜를 기점으로 냉장고 재료가 저장되는 배열
@@ -42,7 +43,7 @@ class FoodItems: ObservableObject {
         fetchRecipes(matching: items.map { $0.name }) { recipes in
             self.recipes = recipes //가져온 레시피 저장
             self.updateRecipes() // 레시피를 가져온 후 추천 레시피를 업데이트
-            self.separateByDate()
+            self.sortByEarliestDate()
         }
     }
     
@@ -56,7 +57,15 @@ class FoodItems: ObservableObject {
             }
         }
     }
-    
+    // 날짜가 과거일수록 상단에 표시되도록 정렬하는 함수
+        func sortByEarliestDate() {
+            DispatchQueue.main.async {
+                self.separateByDateFood.sort {
+                    $0.expirationDate < $1.expirationDate
+                }
+            }
+        }
+
     // 날짜별로 음식 아이템을 분리하는 메소드
     public func separateByDate() {
         DispatchQueue.main.async {
